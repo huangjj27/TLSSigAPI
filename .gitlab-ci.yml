@@ -1,0 +1,21 @@
+image: "rust:stable"
+
+stages:
+  - test
+  - publish
+
+tests:
+  stage: test
+  script:
+    - "cat > .env << EOF"
+    - "TEST_APPID=$TEST_APPID"    
+    - "TEST_APP_KEY=$TEST_APP_KEY"
+    - "TEST_APP_ADMIN=$TEST_APP_ADMIN"
+    - "EOF"
+    - "RUST_LOG=get_sig_from_timsdk=trace,tls_sig_api=trace"
+    - "cargo test -- --nocapture"
+
+crates_io:
+  stage: publish
+  only:
+    - prod
