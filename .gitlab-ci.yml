@@ -17,5 +17,7 @@ tests:
 
 cratesio:
   stage: publish
+  script:
+    - echo "Nothing!"
   only:
     - prod
