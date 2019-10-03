@@ -15,7 +15,7 @@ tests:
     - "RUST_LOG=get_sig_from_timsdk=trace,tls_sig_api=trace"
     - "cargo test -- --nocapture"
 
-crates_io:
+cratesio:
   stage: publish
   only:
     - prod
