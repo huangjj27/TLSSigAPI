@@ -1,0 +1,21 @@
+[package]
+name = "tls_sig_api"
+version = "0.0.1"
+authors = ["huangjj27 <huangjj.27@qq.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+base64 = "0.10"
+ring = "0.16"
+serde_json = { version = "1.0", features = ["preserve_order"] }
+deflate =  "0.8"
+chrono =  "0.4"
+log = "0.4"
+
+[dev-dependencies]
+env_logger = "0.6"
+dotenv = "0.14"
+rand = "0.7"
+reqwest = "0.9"
