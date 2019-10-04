@@ -1,4 +1,4 @@
-image: "rust:stable"
+image: "rust:latest"
 
 stages:
   - test
