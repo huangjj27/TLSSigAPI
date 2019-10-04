@@ -13,6 +13,8 @@ before_script:
 
 tests:
   stage: test
+  environment:
+    name: test
   script:
     - "RUST_LOG=\"get_sig_from_timsdk=trace,tls_sig_api=trace\""
     - "cargo test -- --nocapture"
