@@ -2,7 +2,6 @@ image: "rust:latest"
 cache:
   paths:
     - target/
-    - .cargo/
 
 stages:
   - test

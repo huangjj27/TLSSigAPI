@@ -26,7 +26,9 @@ impl TlsSigApiVer2 {
         self.secret = key.to_string();
     }
 
-    /// generate user sign with timestamp.
+    /// generate user sign with timestamp. Note that the SDK only accept
+    /// timestamps **in seconds**.
+    /// 
     /// # Examples
     ///
     /// ```
@@ -47,9 +49,9 @@ impl TlsSigApiVer2 {
         // Always use current time for production sign.
         let curr_time = Utc::now();
         debug!(
-            "current time: {}, timestamp_millis: {}",
+            "current time: {}, timestamp in seconds: {}",
             curr_time,
-            curr_time.timestamp_millis()
+            curr_time.timestamp()
         );
 
         self.gen_sign_with_time(identifier, curr_time, expire, userbuf)
@@ -66,8 +68,8 @@ impl TlsSigApiVer2 {
             "TLS.ver": self.tls_ver,
             "TLS.identifier": identifier.to_string(),
             "TLS.sdkappid": self.sdkappid,
-            "TLS.expire": expire.num_milliseconds(),
-            "TLS.time": dt.timestamp_millis()
+            "TLS.expire": expire.num_seconds(),
+            "TLS.time": dt.timestamp()
         });
 
         let base64_buf = userbuf.map(|buf| base64::encode_config(buf.as_bytes(), base64::STANDARD));
@@ -97,8 +99,8 @@ impl TlsSigApiVer2 {
             "TLS.identifier:{}\nTLS.sdkappid:{}\nTLS.time:{}\nTLS.expire:{}\n",
             identifier,
             self.sdkappid,
-            curr_time.timestamp_millis(),
-            expire.num_milliseconds(),
+            curr_time.timestamp(),
+            expire.num_seconds(),
         )
         .to_string();
 
@@ -150,8 +152,8 @@ mod test {
             Some(MOCK_USERBUF).map(|buf| base64::encode_config(buf.as_bytes(), base64::STANDARD));
 
         // mock sig generated from python version
-        let mock_sig = "bEj7EPKeOGh/DZ+LevCNXjSrLtgjj+lC8Ed0uirJXYU=";
-        let mock_sig_with_buf = "sWtbl2+lkv1DcoBF2Y2IWjGB44KoDgDIFxdhzwVXo2Q=";
+        let mock_sig = "CpjuBdQs9ZwnuGAJR8onoOeI9fweX2vIMMY94iOJWJY=";
+        let mock_sig_with_buf = "bC3u5cuslSg8Ds7KY58mhSkTrxunrFu50dkdkCYH4i8=";
 
         assert_eq!(
             &signer.hmac_sha256("0", mock_curr_time, Duration::days(180), None),
@@ -165,7 +167,6 @@ mod test {
 
     // UNFINISHED TEST BECAUSE OF WRONG EXPECTED VALUES!
     #[test]
-    #[ignore]
     fn test_fix_time_sign_generation_no_buf() {
         log_init();
 
@@ -175,7 +176,7 @@ mod test {
         let signer = TlsSigApiVer2::new(MOCK_APPID, MOCK_KEY);
 
         // mock sig generated from python version
-        let mock_sig = "eJyrVgrxCdYrSy1SslIy0jNQ0gHzM1NS80oy0zLBwjDB4pTsxIKCzBQlK0MTAyiAyKRWFGQWpQLFTU1NjZAlSjJzwcJmlpaGBkZIEsWZ6UCTk1yzzF0DvFP93TP0XaK0fVLLnP0isoKLfErSs7K0c5wtXFMMSjOLvCIiQ22VagHjLDB3";
+        let mock_sig = "eJyrVgrxCdYrSy1SslIy0jNQ0gHzM1NS80oy0zLBwjDB4pTsxIKCzBQlK0MTAyiAyKRWFGQWpQLFTU1NjeCiJZm5YDEzS0tDAyOYaHFmOtBM54KsUqeUwGLLqPK8UndHryCL-Lx8-1RPy7Ty1AijMk9f30hLk0x-r3CvSFulWgAPYy*9";
 
         assert_eq!(
             &signer.gen_sign_with_time("0", mock_curr_time, Duration::days(180), None),
@@ -186,7 +187,6 @@ mod test {
     // This test is ignore because of the different compressing levels between
     // Rust code and Python code.
     #[test]
-    #[ignore]
     fn test_fix_time_sign_generation_with_buf() {
         log_init();
 
@@ -196,9 +196,7 @@ mod test {
         let signer = TlsSigApiVer2::new(MOCK_APPID, MOCK_KEY);
 
         // mock sig generated from python version
-        // let mock_sig_with_buf = "eNqrVgrxCdYrSy1SslIy0jNQ0gHzM1NS80oy0zLBwjDB4pTsxIKCzBQlK0MTAyiAyKRWFGQWpQLFTU1NjZAlSjJzwcJmlpaGBkZIEqXFqUVJpWlA0yPDvbJgFmSmAwWKw0uScoy0c7LLDF2S853cjCKNPMOz3J1MTLzzXdJdPN0qUjKqysMi8o0CbZVqAR54Nug_";
-        let mock_sig_with_buf = "eAEBwAA--3siVExTLnZlciI6IjIuMCIsIlRMUy5pZGVudGlmaWVyIjoiMCIsIlRMUy5zZGthcHBpZCI6MTQwMDAwMDAwMCwiVExTLmV4cGlyZSI6MTU1NTIwMDAwMDAsIlRMUy50aW1lIjoxNTY5OTEwMjAwMDAwLCJUTFMudXNlcmJ1ZiI6IllXSmoiLCJUTFMuc2lnIjoic1d0YmwyK2xrdjFEY29CRjJZMklXakdCNDRLb0RnRElGeGRoendWWG8yUT0ifR54Nug_";
-
+        let mock_sig_with_buf = "eJw9zEELwiAcBfDv4jmGs1lu0GkRUd0chMeWbv2zDdEZg*i7J5a92-s9eC-UnHj2VBZViGQYLWIHqcYJOoic0El9MQYkqvIC--Jd1GzAquCUUvLXCYZoq7LMMUnqnbKt78KvOB-u6Rr6AG299PTq3YP3bOvWR0HZcOO6sbMf7c5TLLXUtdgXwDbo-QEmHTZF";
         assert_eq!(
             &signer.gen_sign_with_time(
                 "0",

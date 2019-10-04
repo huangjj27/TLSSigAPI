@@ -7,11 +7,10 @@ use std::collections::HashMap;
 use tls_sig_api::TlsSigApiVer2;
 
 #[test]
-#[ignore]
 fn get_sig_from_tim_sdk() {
     let _ = env_logger::builder().is_test(true).try_init();
 
-    let env = dotenv().expect("Found no .dotenv file!");
+    let env = dotenv().expect("Error occurs when processing .dotenv file!");
     trace!("Environments loaded from {:?}.", env);
 
     let appid = var("TEST_APPID")
