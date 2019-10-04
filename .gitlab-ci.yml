@@ -27,16 +27,3 @@ cratesio prepublish check:
     - cargo publish --dry-run
   only:
     - prod
-
-cratesio:
-  stage: publish
-  environment:
-    name: cratesio
-  script:
-    - cargo login $CARGO_TOKEN
-    - cargo publish
-  only:
-    branches:
-      - prod
-    tags:
-      - /^v(0|([1-9]\d+))\.(0|([1-9]\d+))\.(0|([1-9]\d+))$/
