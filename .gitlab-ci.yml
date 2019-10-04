@@ -2,6 +2,7 @@ image: "rust:latest"
 cache:
   paths:
     - target/
+    - .cargo/
 
 stages:
   - test
@@ -20,6 +21,8 @@ tests:
 
 cratesio:
   stage: publish
+  environment:
+    name: cratesio
   script:
     - echo "Nothing!"
   only:
