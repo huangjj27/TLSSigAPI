@@ -23,6 +23,7 @@ cratesio:
   environment:
     name: cratesio
   script:
-    - echo "Nothing!"
+    - cargo login $CARGO_TOKEN
+    - cargo publish --dry-run
   only:
     - prod
