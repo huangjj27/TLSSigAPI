@@ -165,6 +165,7 @@ mod test {
 
     // UNFINISHED TEST BECAUSE OF WRONG EXPECTED VALUES!
     #[test]
+    #[ignore]
     fn test_fix_time_sign_generation_no_buf() {
         log_init();
 
