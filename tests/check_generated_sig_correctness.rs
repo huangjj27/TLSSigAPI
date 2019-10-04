@@ -7,7 +7,7 @@ use std::collections::HashMap;
 use tls_sig_api::TlsSigApiVer2;
 
 #[test]
-fn get_sig_from_tim_sdk() {
+fn check_generated_sig_correctness() {
     let _ = env_logger::builder().is_test(true).try_init();
 
     let env = dotenv().expect("Error occurs when processing .dotenv file!");
