@@ -7,6 +7,7 @@ use std::collections::HashMap;
 use tls_sig_api::TlsSigApiVer2;
 
 #[test]
+#[ignore]
 fn get_sig_from_tim_sdk() {
     let _ = env_logger::builder().is_test(true).try_init();
 
