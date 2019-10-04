@@ -1,5 +1,3 @@
-#!/usr/bin/sh
-
 cat > .env << EOF
 TEST_APPID=$TEST_APPID
 TEST_APP_KEY=$TEST_APP_KEY
