@@ -1,7 +1,7 @@
 image: "rust:latest"
 cache:
   paths:
-    - .cargo/
+    - target/
 
 stages:
   - test
@@ -16,7 +16,6 @@ tests:
   environment:
     name: test
   script:
-    - "RUST_LOG=\"get_sig_from_timsdk=trace,tls_sig_api=trace\""
     - "cargo test -- --nocapture"
 
 cratesio:
