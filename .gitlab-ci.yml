@@ -9,7 +9,7 @@ tests:
   script:
     - "chmod u+x ./ci-setup.sh"
     - "./ci-setup.sh"
-    - "RUST_LOG=\"get_sig_from_tim_sdk=trace,tls_sig_api=trace\""
+    - "RUST_LOG=\"get_sig_from_timsdk=trace,tls_sig_api=trace\""
     - "cargo test -- --nocapture"
 
 cratesio:
