@@ -7,11 +7,10 @@ stages:
   - test
   - publish
 
-before_script:
-  - "chmod u+x ./ci-setup.sh"
-  - "./ci-setup.sh"
-
 tests:
+  before_script:
+    - "chmod u+x ./ci-setup.sh"
+    - "./ci-setup.sh"
   stage: test
   environment:
     name: test
