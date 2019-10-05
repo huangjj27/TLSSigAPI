@@ -16,13 +16,15 @@ tests:
     name: test
   script:
     - "cargo test -- --nocapture"
+  only:
+    - master
 
-cratesio prepublish check:
+cratesio:
   stage: publish
   environment:
     name: cratesio
   script:
     - cargo login $CARGO_TOKEN
-    - cargo publish --dry-run
+    - cargo publish
   only:
     - prod
