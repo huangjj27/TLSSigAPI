@@ -5,6 +5,12 @@ authors = ["huangjj27 <huangjj.27@qq.com>"]
 edition = "2018"
 license = "MIT"
 repository = "git@gitlab.com:huangjj27/tls_sig_api.git"
+description = "Tencent Login Service Signature API (aka. TLSSigAPI)"
+
+include = [
+    "**/*.rs",
+    "Cargo.toml",
+]
 
 [badges]
 gitlab = { repository = "https://gitlab.com/huangjj27/tls_sig_api", branch = "master" }
