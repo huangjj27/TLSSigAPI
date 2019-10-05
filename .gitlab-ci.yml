@@ -19,7 +19,7 @@ tests:
   only:
     - master
 
-cratesio prepublish check:
+cratesio:
   stage: publish
   environment:
     name: cratesio
