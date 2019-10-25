@@ -1,6 +1,6 @@
 # Tencent Login Service Signature API (aka. TLSSigAPI)
 
-[![pipeline status](https://gitlab.com/huangjj27/tls_sig_api/badges/master/pipeline.svg)](https://gitlab.com/huangjj27/tls_sig_api/commits/master)
+[![v0.1.1-rc.1](https://gitlab.com/huangjj27/tls_sig_api/badges/prod/pipeline.svg)](https://gitlab.com/huangjj27/tls_sig_api/commits/prod)
 
 Currently We provide only the `TLSSigAPIv2` using `HMAC-SHA256` as in describe on [TecentYun document(for server use only)](https://cloud.tencent.com/document/product/269/32688#.E6.9C.8D.E5.8A.A1.E7.AB.AF.E8.AE.A1.E7.AE.97-usersig).
 
