@@ -4,8 +4,6 @@ use log::*;
 use ring::hmac;
 use serde_json::json;
 
-mod b64_url_safe;
-
 pub struct TlsSigApiVer2 {
     sdkappid: u64,
     tls_ver: &'static str,
