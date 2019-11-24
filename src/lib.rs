@@ -1,7 +1,8 @@
 use chrono::{DateTime, Duration, Utc};
 use deflate::{deflate_bytes_zlib_conf, Compression};
 use log::*;
-use ring::hmac;
+use sha2::Sha256;
+use hmac::{Hmac, Mac};
 use serde_json::json;
 
 pub struct TlsSigApiVer2 {
@@ -108,8 +109,10 @@ impl TlsSigApiVer2 {
 
         debug!("raw_content_to_be_signed: {}", raw_content_to_be_signed);
 
-        let key = hmac::Key::new(hmac::HMAC_SHA256, self.secret.as_bytes());
-        let digest = hmac::sign(&key, raw_content_to_be_signed.as_bytes());
+        let mut mac = Hmac::<Sha256>::new_varkey(self.secret.as_bytes())
+            .expect("HMAC can take key of any size");
+        mac.input(raw_content_to_be_signed.as_bytes());
+        let digest = mac.result().code();
 
         base64::encode_config(digest.as_ref(), base64::STANDARD)
     }
