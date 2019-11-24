@@ -1,6 +1,6 @@
 [package]
 name = "tls_sig_api"
-version = "0.1.1-rc.1"
+version = "0.1.1-rc.2"
 authors = ["huangjj27 <huangjj.27@qq.com>"]
 edition = "2018"
 license = "MIT"
