@@ -20,6 +20,10 @@ impl TlsSigApiVer2 {
         }
     }
 
+    pub fn appid(&self) -> u64 {
+        self.sdkappid
+    }
+
     /// In case that the key is leaked, we want to update the key at runtime.
     pub fn update_key(&mut self, key: &str) {
         self.secret = key.to_string();
@@ -130,6 +134,12 @@ mod test {
 
     fn log_init() {
         let _ = env_logger::builder().is_test(true).try_init();
+    }
+
+    #[test]
+    fn test_get_appid() {
+        let signer = TlsSigApiVer2::new(MOCK_APPID, "");
+        assert_eq!(signer.appid(), MOCK_APPID);
     }
 
     #[test]
