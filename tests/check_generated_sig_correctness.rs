@@ -30,7 +30,7 @@ fn check_generated_sig_correctness() {
     let admin_sig = sig_api.gen_sign(&admin, Duration::hours(10), None);
     trace!("generated admin_sig: {}", admin_sig);
 
-    let r = random::<u32>();
+    let r = rand::random::<u32>();
 
     let url = format!("https://console.tim.qq.com/v4/im_open_login_svc/account_import?sdkappid={}&identifier={}&usersig={}&random={}&contenttype=json", appid, admin, admin_sig, r).to_string();
     trace!("concated url: {}", url);
